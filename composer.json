@@ -1,0 +1,13 @@
+{
+  "name": "sodium_compat/ed25519",
+  "description": "ed25519 for php",
+  "require": {
+    "paragonie/sodium_compat": "^1.6"
+  },  
+  "autoload": {
+    "psr-4": {
+      "": "route_guide/"
+    }   
+  }
+}
+
