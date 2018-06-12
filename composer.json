@@ -1,7 +1,9 @@
 {
-  "name": "sodium_compat/ed25519",
-  "description": "ed25519 for php",
+  "name": "php-common",
+  "description": "php-common",
   "require": {
+    "grpc/grpc": "^v1.3.0",
+    "google/protobuf": "^v3.3.0",
     "paragonie/sodium_compat": "^1.6"
   },  
   "autoload": {

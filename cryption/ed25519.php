@@ -1,4 +1,14 @@
 <?php
+/*
+ * Copyright arxanculture.com. 2018 All Rights Reserved.
+ *
+ * Author: Song Song (ssong@arxanculture.com)
+ *
+ * Purpose: this file provides ed25519 signature related interfaces 
+ *
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
 
 require dirname(__FILE__).'/../vendor/autoload.php';
 
