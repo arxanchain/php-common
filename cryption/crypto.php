@@ -1,5 +1,7 @@
 <?php
 
+
+// ecc 签名加密
 class encrypt{
     var $api_key;
     var $path;
@@ -11,7 +13,7 @@ class encrypt{
         $this->path = $path;
     }
 
-    function sign_and_encrypt($data,&$cipher_text){
+    function signAndEncrypt($data,&$cipher_text){
         //1.进行json编码
         $json_str = json_encode($data);
         if ($json_str == ""){
@@ -39,12 +41,16 @@ class encrypt{
         return 0;
     }
 
-    function decrypt_and_verify($cipher_text,&$data){
+    function decryptAndVerify($cipher_text,&$data){
         // 拼装解密命令
-        $cmd = "./utils/bin/crypto-util" . " -apikey " .  $api_key . " -data " . $cipher_text. " -path " . $path . " -mode " . $mode2;
+        $cmd = "crypto-util" . " -apikey " .  $this->api_key . " -data " . $cipher_text. " -path " . $this->path . " -mode " . $this->mode2;
 
         //1.验签与解密
         exec($cmd,$out);
+        if (empty($out)){
+            echo "decrypt_and_verify error";
+            return -1;
+        }
 
         //2.json解码
         $data = json_decode($out[0],true);
@@ -55,3 +61,5 @@ class encrypt{
         return 0;
     } 
 }
+
+
