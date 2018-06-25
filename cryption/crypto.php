@@ -1,5 +1,7 @@
 <?php
 
+require (__DIR__ . "/../config.php");
+
 
 // ecc 签名加密
 class encrypt{
@@ -18,6 +20,10 @@ class encrypt{
         $json_str = json_encode($data);
         if ($json_str == ""){
             $cipher_text = "";
+            
+            // 写日志
+            $error_message = __FILE__ . __LINE__ . "json encode error";
+            error_log($error_message,$log_mode,$log_path);
             return -1;
         }
 
@@ -25,6 +31,9 @@ class encrypt{
         $base64_str = base64_encode($json_str);
         if ($base64_str == ""){
             $cipher_text = "";
+
+            $error_message = __FILE__ . __LINE__ . "base64 encode error";
+            error_log($error_message,$log_mode,$log_path);
             return -1;
         }
 
@@ -36,6 +45,9 @@ class encrypt{
         exec($cmd,$out);
         if (empty($out)){
             $cipher_text = "";
+
+            $error_message = __FILE__ . __LINE__ . "sign and encrypt error";
+            error_log($error_message,$log_mode,$log_path);
             return -1;
         }
         $cipher_text = $out[0];
@@ -50,13 +62,16 @@ class encrypt{
         //1.验签与解密
         exec($cmd,$out);
         if (empty($out)){
-            echo "decrypt_and_verify error";
+            $error_message = __FILE__ . __LINE__ . "decrypt and verify error";
+            error_log($error_message,$log_mode,$log_path);
             return -1;
         }
 
         //2.json解码
         $data = json_decode($out[0],true);
         if (empty($data)){
+            $error_message = __FILE__ . __LINE__ . "json decode error";
+            error_log($error_message,$log_mode,$log_path);
             return -1;
         }
 
