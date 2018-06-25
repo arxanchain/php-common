@@ -60,6 +60,12 @@ class encrypt{
             return -1;
         }
 
+        if ($data["ErrCode"] == 0) {
+            if($data["Payload"]!=""){
+                $data["Payload"] = json_decode($data["Payload"],true);
+            }
+        }
+
         return 0;
     } 
 }
