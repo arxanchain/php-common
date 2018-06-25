@@ -21,8 +21,9 @@ class Signature{
         // 2.进行base64编码
         $base64_str = base64_encode($json_str);
         // 3.签名
-        $cmd = "sign-util" . " -key " . $this->key . " -nonce " . $this->nonce . " -did " . $this->did . " -data " .$base64_str;
-
+        $bin = __DIR__ . "/utils/bin/sign-util";
+        $cmd = $bin . " -key " . $this->key . " -nonce " . $this->nonce . " -did " . $this->did . " -data " .$base64_str;
+        //echo "cmd:\n",$cmd ,"\n";
         exec($cmd,$out);
         if (empty($out)){
             echo "sign error";

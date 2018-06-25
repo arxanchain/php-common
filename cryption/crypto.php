@@ -29,7 +29,8 @@ class encrypt{
         }
 
         // 拼装加密命令
-        $cmd = "crypto-util" . " -apikey " .  $this->api_key . " -data " . $base64_str. " -path " . $this->path . " -mode " . $this->mode1;
+        $bin = __DIR__ . "/utils/bin/crypto-util";
+        $cmd = $bin . " -apikey " .  $this->api_key . " -data " . $base64_str. " -path " . $this->path . " -mode " . $this->mode1;
 
         //3.加密签名
         exec($cmd,$out);
@@ -43,7 +44,8 @@ class encrypt{
 
     function decryptAndVerify($cipher_text,&$data){
         // 拼装解密命令
-        $cmd = "crypto-util" . " -apikey " .  $this->api_key . " -data " . $cipher_text. " -path " . $this->path . " -mode " . $this->mode2;
+        $bin = __DIR__ . "/utils/bin/crypto-util";
+        $cmd = $bin . " -apikey " .  $this->api_key . " -data " . $cipher_text. " -path " . $this->path . " -mode " . $this->mode2;
 
         //1.验签与解密
         exec($cmd,$out);
