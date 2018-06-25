@@ -1,6 +1,6 @@
 <?php
 
-require (__DIR__ . "/../config.php")
+require (__DIR__ . "/../config.php");
 
 // ed25519签名
 class Signature{
