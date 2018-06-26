@@ -70,13 +70,17 @@ class encrypt{
             ErrLogChain($error_message);
             return errCode["DeserializeDataFail"];
         }
-
+        
+        //echo $this->path , "\n";
+        //var_dump ($out);
+        //echo  "\n";
         //2.json解码
         $data = json_decode($out[0],true);
         if (empty($data)){
             $message = "json decode error";
             $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
             ErrLogChain($error_message);
+            $data = $out[0];
             return errCode["DeserializeDataFail"];
         }
 
