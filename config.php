@@ -1,4 +1,5 @@
 <?php
+// 定义一些配置项,主要为日志
+const log_path = "/var/log/php/";
 
-$log_path = "/var/log/php/";
-$log_mode = 3;
+?>

@@ -1,6 +1,7 @@
 <?php
 
-require (__DIR__ . "/../log/log.php");
+require_once (__DIR__ . "/../log/log.php");
+require_once (__DIR__ . "/../error/error.php");
 
 // ed25519签名
 class Signature{
@@ -18,9 +19,10 @@ class Signature{
         // 1.对body进行json编码
         $json_str = json_encode($body);
         if ($json_str == ""){
-            $error_message = __FILE__ . __LINE__ . "json encode error";
-            logError($error_message);
-            return $ErrCode["SerializeDataFail"];
+            $message = "json encode error";
+            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
+            ErrLogChain($error_message);
+            return errCode["SerializeDataFail"];
         }
 
         $sign_body = array();
@@ -30,9 +32,10 @@ class Signature{
         // 2.进行base64编码
         $base64_str = base64_encode($json_str);
         if ($base64_str == ""){
-            $error_message = __FILE__ . __LINE__ . "base64 encode error";
-            logError($error_message);
-            return $ErrCode["SerializeDataFail"];
+            $message =  "base64 encode error";
+            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
+            ErrLogChain($error_message);
+            return errCode["SerializeDataFail"];
         }
 
         // 3.签名
@@ -41,9 +44,10 @@ class Signature{
         // 执行签名操作
         exec($cmd,$out);
         if (empty($out)){
-            $error_message = __FILE__ . __LINE__ . "sign data error";
-            logError($error_message);
-            return $ErrCode["ED25519SignFail"];
+            $message = "sign data error";
+            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
+            ErrLogChain($error_message);
+            return errCode["ED25519SignFail"];
         }
 
         // 4.组装结构

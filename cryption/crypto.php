@@ -1,7 +1,7 @@
 <?php
 
-require (__DIR__ . "/../log/log.php");
-require (__DIR__ . "/../error/error.php");
+require_once (__DIR__ . "/../log/log.php");
+require_once (__DIR__ . "/../error/error.php");
 
 // ecc 签名加密
 class encrypt{
@@ -22,9 +22,10 @@ class encrypt{
             $cipher_text = "";
             
             // 写日志
-            $error_message = __FILE__ . __LINE__ . "json encode error";
-            logError($error_message);
-            return $ErrCode["SerializeDataFail"];
+            $message = "json encode error";
+            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
+            ErrLogChain($message);
+            return errCode["SerializeDataFail"];
         }
 
         //2.base64编码
@@ -32,9 +33,10 @@ class encrypt{
         if ($base64_str == ""){
             $cipher_text = "";
 
-            $error_message = __FILE__ . __LINE__ . "base64 encode error";
-            logError($error_message);
-            return $ErrCode["SerializeDataFail"];
+            $message = "base64 encode error";
+            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
+            ErrLogChain($error_message);
+            return errCode["SerializeDataFail"];
         }
 
         // 拼装加密命令
@@ -46,9 +48,10 @@ class encrypt{
         if (empty($out)){
             $cipher_text = "";
 
-            $error_message = __FILE__ . __LINE__ . "sign and encrypt error";
-            logError($error_message);
-            return $ErrCode["SerializeDataFail"];
+            $message = "sign and encrypt error";
+            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
+            ErrLogChain($error_message);
+            return errCode["SerializeDataFail"];
         }
         $cipher_text = $out[0];
         return 0;
@@ -62,20 +65,22 @@ class encrypt{
         //1.验签与解密
         exec($cmd,$out);
         if (empty($out)){
-            $error_message = __FILE__ . __LINE__ . "decrypt and verify error";
-            logError($error_message);
-            return $ErrCode["DeserializeDataFail"];
+            $message = "decrypt and verify error";
+            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
+            ErrLogChain($error_message);
+            return errCode["DeserializeDataFail"];
         }
 
         //2.json解码
         $data = json_decode($out[0],true);
         if (empty($data)){
-            $error_message = __FILE__ . __LINE__ . "json decode error";
-            logError($error_message);
-            return $ErrCode["DeserializeDataFail"];
+            $message = "json decode error";
+            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
+            ErrLogChain($error_message);
+            return errCode["DeserializeDataFail"];
         }
 
-        if ($data["ErrCode"] == 0) {
+        if ($data["errCode"] == 0) {
             if($data["Payload"]!=""){
                 $data["Payload"] = json_decode($data["Payload"],true);
             }

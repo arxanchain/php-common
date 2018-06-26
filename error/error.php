@@ -2,7 +2,7 @@
 
 // 定义一些错误码
 
-$ErrCode = array(
+const errCode = array(
     "InvalidParamsErrCode" => 1000, //参数无效
     "MissingParamsErrCode" => 1001, //缺少参数
     "ParseRequestParamsError" => 1003,  //解析请求体失败
@@ -20,3 +20,5 @@ $ErrCode = array(
     "InvalidSecurityCode" => 6006,  //无效的安全码
     "SDKDecryptAndVerifyFailed" => 10001,   //SDK解密验签失败
 );
+
+?>
