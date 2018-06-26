@@ -1,6 +1,6 @@
 <?php
 
-require (__DIR__ . "/../config.php");
+require (__DIR__ . "/../log/log.php");
 
 // ed25519签名
 class Signature{
@@ -19,7 +19,7 @@ class Signature{
         $json_str = json_encode($body);
         if ($json_str == ""){
             $error_message = __FILE__ . __LINE__ . "json encode error";
-            error_log($error_message,$log_mode,$log_path);
+            logError($error_message);
             return -1;
         }
 
@@ -31,7 +31,7 @@ class Signature{
         $base64_str = base64_encode($json_str);
         if ($base64_str == ""){
             $error_message = __FILE__ . __LINE__ . "base64 encode error";
-            error_log($error_message,$log_mode,$log_path);
+            logError($error_message);
             return -1;
         }
 
@@ -42,7 +42,7 @@ class Signature{
         exec($cmd,$out);
         if (empty($out)){
             $error_message = __FILE__ . __LINE__ . "sign data error";
-            error_log($error_message,$log_mode,$log_path);
+            logError($error_message);
             return -1;
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-require (__DIR__ . "/../config.php");
+require (__DIR__ . "/../log/log.php");
 
 
 // ecc 签名加密
@@ -23,7 +23,7 @@ class encrypt{
             
             // 写日志
             $error_message = __FILE__ . __LINE__ . "json encode error";
-            error_log($error_message,$log_mode,$log_path);
+            logError($error_message);
             return -1;
         }
 
@@ -33,7 +33,7 @@ class encrypt{
             $cipher_text = "";
 
             $error_message = __FILE__ . __LINE__ . "base64 encode error";
-            error_log($error_message,$log_mode,$log_path);
+            logError($error_message);
             return -1;
         }
 
@@ -47,7 +47,7 @@ class encrypt{
             $cipher_text = "";
 
             $error_message = __FILE__ . __LINE__ . "sign and encrypt error";
-            error_log($error_message,$log_mode,$log_path);
+            logError($error_message);
             return -1;
         }
         $cipher_text = $out[0];
@@ -63,7 +63,7 @@ class encrypt{
         exec($cmd,$out);
         if (empty($out)){
             $error_message = __FILE__ . __LINE__ . "decrypt and verify error";
-            error_log($error_message,$log_mode,$log_path);
+            logError($error_message);
             return -1;
         }
 
@@ -71,7 +71,7 @@ class encrypt{
         $data = json_decode($out[0],true);
         if (empty($data)){
             $error_message = __FILE__ . __LINE__ . "json decode error";
-            error_log($error_message,$log_mode,$log_path);
+            logError($error_message);
             return -1;
         }
 
