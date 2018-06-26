@@ -84,11 +84,9 @@ class encrypt{
             if($data["Payload"]!=""){
                 $data["Payload"] = json_decode($data["Payload"],true);
             }
-        }else{
-            var_dump($data);
         }
         
-        return 0;
+        return $data["ErrCode"];
     } 
 }
 
