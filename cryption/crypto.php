@@ -80,12 +80,14 @@ class encrypt{
             return errCode["DeserializeDataFail"];
         }
 
-        if ($data["errCode"] == 0) {
+        if ($data["ErrCode"] == 0) {
             if($data["Payload"]!=""){
                 $data["Payload"] = json_decode($data["Payload"],true);
             }
+        }else{
+            var_dump($data);
         }
-
+        
         return 0;
     } 
 }
