@@ -20,7 +20,7 @@ class Signature{
         if ($json_str == ""){
             $error_message = __FILE__ . __LINE__ . "json encode error";
             logError($error_message);
-            return -1;
+            return $ErrCode["SerializeDataFail"];
         }
 
         $sign_body = array();
@@ -32,7 +32,7 @@ class Signature{
         if ($base64_str == ""){
             $error_message = __FILE__ . __LINE__ . "base64 encode error";
             logError($error_message);
-            return -1;
+            return $ErrCode["SerializeDataFail"];
         }
 
         // 3.签名
@@ -43,7 +43,7 @@ class Signature{
         if (empty($out)){
             $error_message = __FILE__ . __LINE__ . "sign data error";
             logError($error_message);
-            return -1;
+            return $ErrCode["ED25519SignFail"];
         }
 
         // 4.组装结构

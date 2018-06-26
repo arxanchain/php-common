@@ -1,7 +1,7 @@
 <?php
 
 require (__DIR__ . "/../log/log.php");
-
+require (__DIR__ . "/../error/error.php");
 
 // ecc 签名加密
 class encrypt{
@@ -24,7 +24,7 @@ class encrypt{
             // 写日志
             $error_message = __FILE__ . __LINE__ . "json encode error";
             logError($error_message);
-            return -1;
+            return $ErrCode["SerializeDataFail"];
         }
 
         //2.base64编码
@@ -34,7 +34,7 @@ class encrypt{
 
             $error_message = __FILE__ . __LINE__ . "base64 encode error";
             logError($error_message);
-            return -1;
+            return $ErrCode["SerializeDataFail"];
         }
 
         // 拼装加密命令
@@ -48,7 +48,7 @@ class encrypt{
 
             $error_message = __FILE__ . __LINE__ . "sign and encrypt error";
             logError($error_message);
-            return -1;
+            return $ErrCode["SerializeDataFail"];
         }
         $cipher_text = $out[0];
         return 0;
@@ -64,7 +64,7 @@ class encrypt{
         if (empty($out)){
             $error_message = __FILE__ . __LINE__ . "decrypt and verify error";
             logError($error_message);
-            return -1;
+            return $ErrCode["DeserializeDataFail"];
         }
 
         //2.json解码
@@ -72,7 +72,7 @@ class encrypt{
         if (empty($data)){
             $error_message = __FILE__ . __LINE__ . "json decode error";
             logError($error_message);
-            return -1;
+            return $ErrCode["DeserializeDataFail"];
         }
 
         if ($data["ErrCode"] == 0) {
