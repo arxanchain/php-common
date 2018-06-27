@@ -17,6 +17,8 @@ class encrypt{
 
     function signAndEncrypt($data,&$cipher_text){
         if(empty($data)){
+            $message = "invalid params";
+            ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["InvalidParamsErrCode"];
         }
 
@@ -27,8 +29,9 @@ class encrypt{
             
             // 写日志
             $message = "json encode error";
-            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
-            ErrLogChain($message);
+            //$error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
+            //ErrLogChain($message);
+            ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["SerializeDataFail"];
         }
 
@@ -36,10 +39,8 @@ class encrypt{
         $base64_str = base64_encode($json_str);
         if ($base64_str == ""){
             $cipher_text = "";
-
             $message = "base64 encode error";
-            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
-            ErrLogChain($error_message);
+            ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["SerializeDataFail"];
         }
 
@@ -53,8 +54,7 @@ class encrypt{
             $cipher_text = "";
 
             $message = "sign and encrypt error";
-            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
-            ErrLogChain($error_message);
+            ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["SerializeDataFail"];
         }
         $cipher_text = $out[0];
@@ -63,8 +63,11 @@ class encrypt{
 
     function decryptAndVerify($cipher_text,&$data){
         if($cipher_text == ""){
+            $message = "invalid params";
+            ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["InvalidParamsErrCode"];
         }
+
         // 拼装解密命令
         $bin = __DIR__ . "/utils/bin/crypto-util";
         $cmd = $bin . " -apikey " .  $this->api_key . " -data " . $cipher_text. " -path " . $this->path . " -mode " . $this->mode2;
@@ -73,20 +76,15 @@ class encrypt{
         exec($cmd,$out);
         if (empty($out)){
             $message = "decrypt and verify error";
-            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
-            ErrLogChain($error_message);
+            ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["DeserializeDataFail"];
         }
         
-        //echo $this->path , "\n";
-        //var_dump ($out);
-        //echo  "\n";
         //2.json解码
         $data = json_decode($out[0],true);
         if (empty($data)){
             $message = "json decode error";
-            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
-            ErrLogChain($error_message);
+            ErrLogChain(__FILE__,__LINE__,$message);
             $data = $out[0];
             return errCode["DeserializeDataFail"];
         }

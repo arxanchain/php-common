@@ -17,6 +17,8 @@ class Signature{
 
     function sign($body,&$data){
         if(empty($data)){
+            $message = "invalid params";
+            ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["InvalidParamsErrCode"];
         }
         
@@ -24,8 +26,7 @@ class Signature{
         $json_str = json_encode($body);
         if ($json_str == ""){
             $message = "json encode error";
-            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
-            ErrLogChain($error_message);
+            ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["SerializeDataFail"];
         }
 
@@ -37,8 +38,7 @@ class Signature{
         $base64_str = base64_encode($json_str);
         if ($base64_str == ""){
             $message =  "base64 encode error";
-            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
-            ErrLogChain($error_message);
+            ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["SerializeDataFail"];
         }
 
@@ -49,8 +49,7 @@ class Signature{
         exec($cmd,$out);
         if (empty($out)){
             $message = "sign data error";
-            $error_message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]: " . $message;
-            ErrLogChain($error_message);
+            ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["ED25519SignFail"];
         }
 
