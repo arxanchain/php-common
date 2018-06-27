@@ -16,7 +16,7 @@ class Signature{
     }
 
     function sign($body,&$data){
-        if(empty($data)){
+        if(empty($body)){
             $message = "invalid params";
             ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["InvalidParamsErrCode"];
