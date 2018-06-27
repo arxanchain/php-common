@@ -16,6 +16,10 @@ class Signature{
     }
 
     function sign($body,&$data){
+        if(empty($data)){
+            return errCode["InvalidParamsErrCode"];
+        }
+        
         // 1.对body进行json编码
         $json_str = json_encode($body);
         if ($json_str == ""){

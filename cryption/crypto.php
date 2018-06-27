@@ -16,6 +16,10 @@ class encrypt{
     }
 
     function signAndEncrypt($data,&$cipher_text){
+        if(empty($data)){
+            return errCode["InvalidParamsErrCode"];
+        }
+
         //1.进行json编码
         $json_str = json_encode($data);
         if ($json_str == ""){
@@ -58,6 +62,9 @@ class encrypt{
     }
 
     function decryptAndVerify($cipher_text,&$data){
+        if($cipher_text == ""){
+            return errCode["InvalidParamsErrCode"];
+        }
         // 拼装解密命令
         $bin = __DIR__ . "/utils/bin/crypto-util";
         $cmd = $bin . " -apikey " .  $this->api_key . " -data " . $cipher_text. " -path " . $this->path . " -mode " . $this->mode2;
