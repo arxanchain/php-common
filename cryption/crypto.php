@@ -26,9 +26,6 @@ class encrypt{
         $json_str = json_encode($data);
         if ($json_str == ""){
             $cipher_text = "";
-            // 写日志
-            //$message = "json encode error";
-            //ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["SerializeDataFail"];
         }
 
@@ -36,8 +33,6 @@ class encrypt{
         $base64_str = base64_encode($json_str);
         if ($base64_str == ""){
             $cipher_text = "";
-            //$message = "base64 encode error";
-            //ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["SerializeDataFail"];
         }
 
@@ -49,8 +44,6 @@ class encrypt{
         exec($cmd,$out);
         if (empty($out)){
             $cipher_text = "";
-            //$message = "sign and encrypt error";
-           // ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["SerializeDataFail"];
         }
         $cipher_text = $out[0];
@@ -59,8 +52,6 @@ class encrypt{
 
     function decryptAndVerify($cipher_text,&$data){
         if($cipher_text == ""){
-            //$message = "invalid params";
-            //ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["InvalidParamsErrCode"];
         }
 
@@ -71,16 +62,12 @@ class encrypt{
         //1.验签与解密
         exec($cmd,$out);
         if (empty($out)){
-            //$message = "decrypt and verify error";
-            //ErrLogChain(__FILE__,__LINE__,$message);
             return errCode["DeserializeDataFail"];
         }
         
         //2.json解码
         $data = json_decode($out[0],true);
         if (empty($data)){
-            //$message = "json decode error";
-            //ErrLogChain(__FILE__,__LINE__,$message);
             $data = $out[0];
             return errCode["DeserializeDataFail"];
         }
