@@ -15,8 +15,6 @@ function ErrLogChain($file,$line,$content){
 
     // 拼装日志信息
     $message = " [" . basename($file) . "]" .  "[" . $line . "]: " . $content;
-    //$message = " [" . basename(__FILE__) . "]" .  "[" . __LINE__ . "]" . ": " . $content;
-    //echo "\n" , $message , "\n",$content,"\n";
     
     error_log(date("[Y-m-d H:i:s]").$message."\n", 3,$logfile);  
 } 
