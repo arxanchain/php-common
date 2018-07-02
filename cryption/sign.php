@@ -2,22 +2,24 @@
 
 require_once (__DIR__ . "/../log/log.php");
 require_once (__DIR__ . "/../error/error.php");
+require_once (__DIR__ . "/../structs/struct.php");
 
 // ed25519签名
 class Signature{
 
-    function sign($body,$signature_param,&$data){
+    function sign($body,$sign_param,&$data){
+        
         if(empty($body)){
             return errCode["InvalidParamsErrCode"];
         }
 
-        if(empty($signature_param)){
+        if($sign_param == NULL){
             return errCode["InvalidParamsErrCode"];
         }
 
-        $key = $signature_param["key"];
-        $did = $signature_param["did"];
-        $nonce = $signature_param["nonce"];
+        $key = $sign_param->getPrivateKey();
+        $did = $sign_param->getCreator();
+        $nonce = $sign_param->getNonce();
         
         // 1.对body进行json编码
         $json_str = json_encode($body);
@@ -53,12 +55,12 @@ class Signature{
         return 0;
     }
 
-    function signTx($old_script,$signature_param,&$new_script){
+    function signTx($old_script,$sign_param,&$new_script){
         if($old_script == ""){
             return errCode["InvalidParamsErrCode"];
         }
 
-        if(empty($signature_param)){
+        if($sign_param == NULL){
             return errCode["InvalidParamsErrCode"];
         }
 
@@ -76,9 +78,9 @@ class Signature{
             return errCode["DeserializeDataFail"];
         }
 
-        $key = $signature_param["key"];
-        $did = $signature_param["did"];
-        $nonce = $signature_param["nonce"];
+        $key = $sign_param->getPrivateKey();
+        $did = $sign_param->getCreator();
+        $nonce = $sign_param->getNonce();
 
         // 3.签名
         $bin = __DIR__ . "/utils/bin/sign-util";
@@ -90,8 +92,8 @@ class Signature{
         }
 
         $new_data = array(
-            "creator" => $signature_param["did"],
-            "nonce" => $signature_param["nonce"],
+            "creator" => $sign_param->getCreator(),
+            "nonce" => $sign_param->getNonce(),
             "publicKey" => $old_data["publicKey"],
             "signature" => $out[0],
         );
