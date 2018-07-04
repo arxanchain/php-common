@@ -4,7 +4,7 @@ require_once (__DIR__ . "/../log/log.php");
 require_once (__DIR__ . "/../error/error.php");
 
 // ecc 签名加密
-class encrypt{
+class Encrypt{
     var $api_key;
     var $path;
     var $mode1 = 1; // 加密与签名

@@ -9,7 +9,7 @@ class SignParam {
     function __construct($creator,$nonce,$private_key){
         $this->creator = $creator;
         $this->nonce = $nonce;
-        $private_key = $private_key;
+        $this->private_key = $private_key;
     }
 
     function getCreator(){
