@@ -88,7 +88,7 @@ class Signature{
         $nonce = $sign_param->getNonce();
 
         // 3.签名
-        $bin = __DIR__ . "/../../../utils/bin/sign-util";
+        $bin = __DIR__ . "/../../utils/bin/sign-util";
         $cmd = $bin . " -key " . $key . " -nonce " . $nonce . " -did " . $did . " -data " .$old_data["publicKey"];
 
         exec($cmd,$out);
