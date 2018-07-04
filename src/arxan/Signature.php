@@ -1,8 +1,13 @@
 <?php
 
-require_once (__DIR__ . "/../log/log.php");
-require_once (__DIR__ . "/../error/error.php");
-require_once (__DIR__ . "/../structs/struct.php");
+namespace arxan;
+
+//require_once (__DIR__ . "/../log/log.php");
+require_once (__DIR__ . "/errCode.php");
+require_once (__DIR__ . "/structs/SignParam.php");
+
+use arxan\structs\SignParam;
+use arxan\errCode;
 
 // ed25519签名
 class Signature{
@@ -38,7 +43,7 @@ class Signature{
         }
 
         // 3.签名
-        $bin = __DIR__ . "/utils/bin/sign-util";
+        $bin = __DIR__ . "/../../utils/bin/sign-util";
         $cmd = $bin . " -key " . $key . " -nonce " . $nonce . " -did " . $did . " -data " .$base64_str;
         // 执行签名操作
         exec($cmd,$out);
@@ -83,7 +88,7 @@ class Signature{
         $nonce = $sign_param->getNonce();
 
         // 3.签名
-        $bin = __DIR__ . "/utils/bin/sign-util";
+        $bin = __DIR__ . "/../../../utils/bin/sign-util";
         $cmd = $bin . " -key " . $key . " -nonce " . $nonce . " -did " . $did . " -data " .$old_data["publicKey"];
 
         exec($cmd,$out);

@@ -1,7 +1,9 @@
 <?php
 
-require_once (__DIR__ . "/../log/log.php");
-require_once (__DIR__ . "/../error/error.php");
+namespace arxan;
+
+//require_once (__DIR__ . "/../log/log.php");
+require_once (__DIR__ . "/errCode.php");
 
 // ecc 签名加密
 class Encrypt{
@@ -37,7 +39,7 @@ class Encrypt{
         }
 
         // 拼装加密命令
-        $bin = __DIR__ . "/utils/bin/crypto-util";
+        $bin = __DIR__ . "/../../utils/bin/crypto-util";
         $cmd = $bin . " -apikey " .  $this->api_key . " -data " . $base64_str. " -path " . $this->path . " -mode " . $this->mode1;
 
         //3.加密签名
@@ -56,7 +58,7 @@ class Encrypt{
         }
 
         // 拼装解密命令
-        $bin = __DIR__ . "/utils/bin/crypto-util";
+        $bin = __DIR__ . "/../../utils/bin/crypto-util";
         $cmd = $bin . " -apikey " .  $this->api_key . " -data " . $cipher_text. " -path " . $this->path . " -mode " . $this->mode2;
 
         //1.验签与解密

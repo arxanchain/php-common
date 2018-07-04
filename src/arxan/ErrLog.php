@@ -1,9 +1,11 @@
 <?php
 
-require_once (__DIR__ . "/../config.php");
+namespace arxan;
+
+require_once (__DIR__ . "/../../config.php");
 // 提供log文件输出
 
-function ErrLogChain($file,$line,$content){
+function ErrLog($file,$line,$content){
     // 设置中国时区
     date_default_timezone_set("Asia/Shanghai");
     // 设置日志名称
